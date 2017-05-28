@@ -46,7 +46,7 @@ router.post('/', function (req, res, next) {
     ) {
         formateur = new Formateur({
             cin: req.body.cin,
-            nom: req.body.cin,
+            nom: req.body.nom,
             prenom: req.body.prenom,
             specialite: req.body.specialite
         });
@@ -94,5 +94,9 @@ router.put('/', function (req, res, next) {
 });
 
 //TODO: Recherche Avancée
+
+router.get('*', function(req, res) {
+    res.sendfile('./public/index.html'); // load our public/index.html file
+});
 
 module.exports = router;
