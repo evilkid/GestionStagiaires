@@ -20,12 +20,4 @@ angular
             var data = {'cin': cin, 'nom': nom, 'prenom': prenom, 'specialite': specialite};
             return $http.put('/formateur', data);
         };
-
-        this.findTrip = function (from, to) {
-            var trips = this.getAll();
-            return $filter('filter')(trips, {from: from, to: to})[0];
-            //My version
-            //var trip = this.getAll().find(x => x.id == id);
-            //return trip;
-        };
     }]);
