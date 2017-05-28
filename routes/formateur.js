@@ -1,9 +1,30 @@
 var express = require('express');
 var router = express.Router();
+var Linkedin = require('node-linkedin')('779kwjelaoff4h', 'MCNrtcMoeACfLFiV', 'http://localhost:3000/formateur/linkedin/callback');
+
 
 var mongoose = require('mongoose');
 var Formateur = mongoose.model('formateur');
 
+var scope = ['r_basicprofile'];
+
+router.get('/linkedin/oauth', function (req, res) {
+    Linkedin.auth.authorize(res, scope);
+});
+
+router.get("/linkedin/callback", function (req, res, next) {
+    Linkedin.auth.getAccessToken(res, req.query.code, req.query.state, function (err, results) {
+        if (err)
+            return console.error(err);
+
+        var linkedin = Linkedin.init(results.access_token);
+
+        linkedin.people.me(function (err, me) {
+            res.json(me);
+        });
+
+    });
+});
 
 router.get('/', function (req, res, next) {
     Formateur.find({}, function (err, formateurs) {
