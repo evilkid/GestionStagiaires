@@ -19,8 +19,22 @@ router.get("/linkedin/callback", function (req, res, next) {
 
         var linkedin = Linkedin.init(results.access_token);
 
+
         linkedin.people.me(function (err, me) {
-            res.json(me);
+            formateur = new Formateur({
+                cin: 0,
+                nom: me.firstName,
+                prenom: me.lastName,
+                specialite: me.headline
+            });
+
+            formateur.save(function (err) {
+                if (err) {
+                    res.json(err);
+                } else {
+                    res.redirect("/");
+                }
+            });
         });
 
     });
@@ -116,7 +130,7 @@ router.put('/', function (req, res, next) {
 
 //TODO: Recherche Avancée
 
-router.get('*', function(req, res) {
+router.get('*', function (req, res) {
     res.sendfile('./public/index.html'); // load our public/index.html file
 });
 

@@ -1,7 +1,7 @@
 'use strict';
 angular
     .module('stagiaireApp')
-    .service('formateurService', ['$filter', '$http', function ($filter, $http) {
+    .service('FormateurService', ['$filter', '$http', function ($filter, $http) {
         
         this.getAll = function () {
             return $http.get('/formateur');;
